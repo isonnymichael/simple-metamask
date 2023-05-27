@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Simple dapp</title>
+</head>
+<body>
+  <button id="enableEthereumButton">Enable Ethereum</button>
+  <h2>Account: <span id="showAccount"></span></h2>
+</body>
+</html>
+
+<script type="text/javascript">
+    const metamaskButton = document.querySelector('#enableEthereumButton');
+    const showAccrount = document.querySelector('#showAccount');
+
+    if(!window.ethereum){ 
+        alert("No injected wallet. Please install Metamask");
+    }else{
+        metamaskButton.onclick = async () => {
+            try {            
+                const accountResponse = await window.ethereum.request({
+                    method: 'eth_requestAccounts',
+                    params: []
+                });
+                const account = accountResponse[0];
+                showAccrount.innerHTML = account;
+               
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
+</script>
